@@ -67,7 +67,7 @@ cfg.timestep     = 0.001
 cfg.decimation   = 4
 cfg.sync         = True
 cfg.headless     = False
-cfg.init_key     = "0"
+cfg.init_key     = "10"
 cfg.render_set   = {
     "fps"    : 30,
     "width"  : 1920, # 640,
@@ -106,8 +106,8 @@ if __name__ == "__main__":
             index_array=np.array(sim_node.get_sensor_data()["index"]).reshape((8,4))
             mid_array=np.array(sim_node.get_sensor_data()["mid"]).reshape((8,4))
             ring_array=np.array(sim_node.get_sensor_data()["ring"]).reshape((8,4))
-            print(thumb_array)
-            print("\n")
+            # print(thumb_array)
+            # print("\n")
 
             # max_threshold=100.0
             # thumb_array=np.clip(thumb_array, amin=None, a_max=max_threshold)
