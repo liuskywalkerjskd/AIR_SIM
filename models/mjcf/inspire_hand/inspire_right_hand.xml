@@ -14,21 +14,6 @@
     <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3"
       markrgb="0.8 0.8 0.8" width="300" height="300"/>
     <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2"/>
-    <!-- <mesh name="base_link" file="../meshes/base_link.STL"/>
-    <mesh name="palm_Link" file="../meshes/palm_Link.STL"/>
-    <mesh name="palm_Link_1" file="../meshes/palm_Link_1.STL"/>
-    <mesh name="right_thumb_1" file="../meshes/right_thumb_1.STL"/>
-    <mesh name="right_thumb_2" file="../meshes/right_thumb_2.STL"/>
-    <mesh name="right_thumb_3" file="../meshes/right_thumb_3.STL"/>
-    <mesh name="right_thumb_4" file="../meshes/right_thumb_4.STL"/>
-    <mesh name="right_index_1" file="../meshes/right_index_1.STL"/>
-    <mesh name="right_index_2" file="../meshes/right_index_2.STL"/>
-    <mesh name="right_middle" file="../meshes/right_middle.STL"/>
-    <mesh name="right_middle_2" file="../meshes/right_middle_2.STL"/>
-    <mesh name="right_ring_1" file="../meshes/right_ring_1.STL"/>
-    <mesh name="right_ring_2" file="../meshes/right_ring_2.STL"/>
-    <mesh name="right_little_1" file="../meshes/right_little_1.STL"/>
-    <mesh name="right_little_2" file="../meshes/right_little_2.STL"/> -->
 
     <include file="convex_dec_include/base_link_asset_include.xml"/>
     <include file="convex_dec_include/palm_Link_asset_include.xml"/>
@@ -50,7 +35,6 @@
 
     <include file="convex_dec_include/right_little_1_asset_include.xml"/>
     <include file="convex_dec_include/right_little_2_asset_include.xml"/>
-
   </asset>
 
   <worldbody>
@@ -73,7 +57,7 @@
       <include file="convex_dec_include/palm_Link_1_geom_include.xml"/>
     </body>
 
-    <body name="right_thumb_1" pos="0.0210314 0.0268833 0.069" quat="-0.706828 0 0 0.707386">cf
+    <body name="right_thumb_1" pos="0.0210314 0.0268833 0.069" quat="-0.706828 0 0 0.707386">
       <inertial pos="-0.00178423 0.000649411 0.00488589" quat="0.609481 0.695344 0.128437 -0.358515" mass="0.00115519" diaginertia="6.58579e-08 5.87769e-08 3.77927e-08"/>
       <joint name="right_thumb_1_joint" pos="0 0 0" axis="0 0 -1" range="0 1.15" actuatorfrcrange="-10 10"/>
       <!-- <geom type="mesh" rgba="0.203922 0.203922 0.203922 1" mesh="right_thumb_1"/> -->
@@ -198,18 +182,18 @@
 
   <actuator>
   
-  <position  name="right_thumb_1_joint" joint="right_thumb_1_joint"  kp="2" dampratio="0.1"/>
-  <position  name="right_thumb_2_joint" joint="right_thumb_2_joint"  kp="2" dampratio="0.1"/>
-  <position  name="right_thumb_3_joint" joint="right_thumb_3_joint"  kp="2" dampratio="0.1"/>
-  <position  name="right_thumb_4_joint" joint="right_thumb_4_joint"  kp="2" dampratio="0.1"/>
-  <position  name="right_index_1_joint" joint="right_index_1_joint"  kp="2" dampratio="0.1"/>
-  <position  name="right_index_2_joint" joint="right_index_2_joint"  kp="2" dampratio="0.1"/>
-  <position  name="right_middle_1_joint" joint="right_middle_1_joint"  kp="2" dampratio="0.1"/>
-  <position  name="right_middle_2_joint" joint="right_middle_2_joint"  kp="2" dampratio="0.1"/>
-  <position  name="right_ring_1_joint" joint="right_ring_1_joint"  kp="2" dampratio="0.1"/>
-  <position  name="right_ring_2_joint" joint="right_ring_2_joint"  kp="2" dampratio="0.1"/>
-  <position  name="right_little_1_joint" joint="right_little_1_joint"  kp="2" dampratio="0.1"/>
-  <position  name="right_little_2_joint" joint="right_little_2_joint"  kp="2" dampratio="0.1"/>
+  <position  inheritrange="1" name="right_thumb_1_joint" joint="right_thumb_1_joint"  kp="2" dampratio="0.1"/>
+  <position  inheritrange="1" name="right_thumb_2_joint" joint="right_thumb_2_joint"  kp="2" dampratio="0.1"/>
+  <position  inheritrange="1" name="right_thumb_3_joint" joint="right_thumb_3_joint"  kp="2" dampratio="0.1"/>
+  <position  inheritrange="1" name="right_thumb_4_joint" joint="right_thumb_4_joint"  kp="2" dampratio="0.1"/>
+  <position  inheritrange="1" name="right_index_1_joint" joint="right_index_1_joint"  kp="2" dampratio="0.1"/>
+  <position  inheritrange="1" name="right_index_2_joint" joint="right_index_2_joint"  kp="2" dampratio="0.1"/>
+  <position  inheritrange="1" name="right_middle_1_joint" joint="right_middle_1_joint"  kp="2" dampratio="0.1"/>
+  <position  inheritrange="1" name="right_middle_2_joint" joint="right_middle_2_joint"  kp="2" dampratio="0.1"/>
+  <position  inheritrange="1" name="right_ring_1_joint" joint="right_ring_1_joint"  kp="2" dampratio="0.1"/>
+  <position  inheritrange="1" name="right_ring_2_joint" joint="right_ring_2_joint"  kp="2" dampratio="0.1"/>
+  <position  inheritrange="1" name="right_little_1_joint" joint="right_little_1_joint"  kp="2" dampratio="0.1"/>
+  <position  inheritrange="1" name="right_little_2_joint" joint="right_little_2_joint"  kp="2" dampratio="0.1"/>
 
   </actuator>
 
