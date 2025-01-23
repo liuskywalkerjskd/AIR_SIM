@@ -3,6 +3,14 @@ import mujoco
 import matplotlib.pyplot as plt
 from discoverse.envs.inspire_hand_base import InspireHandCfg, InspireHandBase
 
+# 机械手欠驱关系：
+# 电机 1 → R_thumb_MCP_joint1
+# 电机 2 → R_thumb_MCP_joint2 → R_thumb_PIP_joint (0.8x) → R_thumb_DIP_joint (1.2x)
+# 电机 3 → R_index_MCP_joint → R_index_DIP_joint (1x)
+# 电机 4 → R_middle_MCP_joint → R_middle_DIP_joint (1x)
+# 电机 5 → R_ring_MCP_joint → R_ring_DIP_joint (1x)
+# 电机 6 → R_pinky_MCP_joint → R_pinky_DIP_joint (1x)
+
 action = np.zeros(12) #inspire hand has 12 joints
 obs_lst = []
 
