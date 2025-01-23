@@ -11,14 +11,13 @@ from discoverse.envs.inspire_hand_base import InspireHandCfg, InspireHandBase
 # 电机 5 → R_ring_MCP_joint → R_ring_DIP_joint (1x)
 # 电机 6 → R_pinky_MCP_joint → R_pinky_DIP_joint (1x)
 
-action = np.zeros(12) #inspire hand has 12 joints
+action = np.zeros(6) #inspire hand has 6 motors
 obs_lst = []
 
 class SimNode(InspireHandBase):
     key_id = 0
-    #inspire hand has 12 joints
-    target_action = np.zeros(12) 
-    joint_move_ratio = np.zeros(12)
+    target_action = np.zeros(6) 
+    joint_move_ratio = np.zeros(6)
     
     def __init__(self, cfg):
         super().__init__(cfg)
@@ -32,29 +31,33 @@ class SimNode(InspireHandBase):
         action[:] = self.target_action[:]
 
     def update_control_from_keyframe(self, key):
-        self.target_action = self.mj_model.key(key).qpos[:self.nj].copy()
+        # 为奇数的时候置为目标位置，为偶数的时候置为0
+        if int(key) % 2 != 0:
+            self.target_action = [0.322,0.454,0.08,0.08,1.5,1.5]
+        else:
+            self.target_action = [0,0,0,0,0,0]
         global action
         dif = np.abs(action - self.target_action)
         self.joint_move_ratio = dif / (np.max(dif) + 1e-6)
         
-        print("target pos:",self.mj_model.key(key).qpos[:self.nj])
+        print("target pos:",self.target_action)
         print("joint_move_ratio:",self.joint_move_ratio)
 
     def cv2WindowKeyPressCallback(self, key):
         ret = super().cv2WindowKeyPressCallback(key)
         
+        # 从窗口获取按键，对空格键计数
         if key != -1:
             print("key:", key)
             
         if key == ord(' '):
             self.key_id += 1
-            if self.key_id > 12:
-                self.key_id = 12
-                print("key_id is out of range")
             self.update_control_from_keyframe(self.key_id)
         return ret
     
     def getObservation(self):
+        
+        #获取观测
         self.obs = {
             "jq"    : self.mj_data.qpos[:self.nj].tolist(),
             "jv"    : self.mj_data.qvel[:self.nj].tolist(),
@@ -71,7 +74,7 @@ cfg.timestep     = 0.001
 cfg.decimation   = 4
 cfg.sync         = True
 cfg.headless     = False
-cfg.init_key     = "10"
+cfg.init_key     = "0"
 cfg.render_set   = {
     "fps"    : 30,
     "width"  : 1920, # 640,
@@ -98,7 +101,7 @@ if __name__ == "__main__":
     try:
         while sim_node.running:
 
-            for i in range(sim_node.nj):
+            for i in range(sim_node.na):
                 action[i] = step_func(action[i], sim_node.target_action[i], 2. * sim_node.joint_move_ratio[i] * sim_node.config.decimation * sim_node.mj_model.opt.timestep)
 
             obs, _, _, _, _ = sim_node.step(action)

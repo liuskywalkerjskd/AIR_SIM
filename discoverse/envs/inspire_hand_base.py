@@ -26,38 +26,39 @@ class InspireHandCfg(BaseConfig):
 class InspireHandBase(SimulatorBase):
     def __init__(self, config: InspireHandCfg):
         self.nj = 12 #inspire hand has 12 joints
+        self.na = 6 #inspire hand has 6 actuators
         super().__init__(config)
         
         self.init_joint_pose = self.mj_model.key(self.config.init_key).qpos[:self.nj]
-        self.init_joint_ctrl = self.mj_model.key(self.config.init_key).ctrl[:self.nj]
+        self.init_joint_ctrl = self.mj_model.key(self.config.init_key).ctrl[:self.na]
         self.resetState()
         print("key_shape:",self.mj_model.key(self.config.init_key))
         
         # key_shape: <_MjModelKeyframeViews
         # act: array([], dtype=float64)
-        # ctrl: array([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.])
-        # id: 0
+        # ctrl: array([0., 0., 0., 0., 0., 0.])
+        # id: 10
         # mpos: array([], dtype=float64)
         # mquat: array([], dtype=float64)
-        # name: '0'
+        # name: '10'
         # qpos: array([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.])
         # qvel: array([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.])
         # time: array([0.])
-        # >
+        #>
         
     def resetState(self):
         print("sim_reset")
         mujoco.mj_resetData(self.mj_model, self.mj_data)
 
         self.mj_data.qpos[:self.nj] = self.init_joint_pose.copy()
-        self.mj_data.ctrl[:self.nj] = self.init_joint_ctrl.copy()
+        self.mj_data.ctrl[:self.na] = self.init_joint_ctrl.copy()
 
         mujoco.mj_forward(self.mj_model, self.mj_data)
         
     def updateControl(self, action):
         # print("mj_data.ctrl shape:", self.mj_data.ctrl.shape)
 
-        for i in range(self.nj):
+        for i in range(self.na):
             self.mj_data.ctrl[i] = action[i]
             self.mj_data.ctrl[i] = np.clip(self.mj_data.ctrl[i], self.mj_model.actuator_ctrlrange[i][0], self.mj_model.actuator_ctrlrange[i][1])
             

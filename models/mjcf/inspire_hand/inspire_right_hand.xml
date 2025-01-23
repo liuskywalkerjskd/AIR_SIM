@@ -139,38 +139,33 @@
     <include file="sensor_include/palm_touch_include.xml"/>
   </sensor>
   
-  <!-- <keyframe>
+  <keyframe>
     <key name="0" qpos='0 0 0 0 0 0 0 0 0 0 0 0'/>
-    <key name="1" qpos='-6.94625e-21 0.642492 0.660368 -0.0197434 -0.0529768 -8.27896e-05 0.983172 1.00129 1.00291 1.00112 1.00226 0.730774'/>
+    <key name="1" qpos='0.322 0.452629 0.584079 0.390745 0.0807463 0.0882835 0.0808664 0.0895169 1.49839 1.50633 1.50595 1.51428'/>
     <key name="2" qpos='0 0 0 0 0 0 0 0 0 0 0 0'/>
-    <key name="3" qpos='-6.94625e-21 0.642492 0.660368 -0.0197434 -0.0529768 -8.27896e-05 0.983172 1.00129 1.00291 1.00112 1.00226 0.730774'/>
+    <key name="3" qpos='0.322 0.452629 0.584079 0.390745 0.0807463 0.0882835 0.0808664 0.0895169 1.49839 1.50633 1.50595 1.51428'/>
     <key name="4" qpos='0 0 0 0 0 0 0 0 0 0 0 0'/>
-    <key name="5" qpos='-6.94625e-21 0.642492 0.660368 -0.0197434 -0.0529768 -8.27896e-05 0.983172 1.00129 1.00291 1.00112 1.00226 0.730774'/>
+    <key name="5" qpos='0.322 0.452629 0.584079 0.390745 0.0807463 0.0882835 0.0808664 0.0895169 1.49839 1.50633 1.50595 1.51428'/>
     <key name="6" qpos='0 0 0 0 0 0 0 0 0 0 0 0'/>
-    <key name="7" qpos='-6.94625e-21 0.642492 0.660368 -0.0197434 -0.0529768 -8.27896e-05 0.983172 1.00129 1.00291 1.00112 1.00226 0.730774'/>
-    <key name="8" qpos='0 0 0 0 0 0 0 0 0 0 0 0'/>
-    <key name="9" qpos='-6.94625e-21 0.642492 0.660368 -0.0197434 -0.0529768 -8.27896e-05 0.983172 1.00129 1.00291 1.00112 1.00226 0.730774'/>
-    <key name="10" qpos='0 0 0 0 0 0 0 0 0 0 0 0'/>
-    <key name="11" qpos='-6.94625e-21 0.642492 0.660368 -0.0197434 -0.0529768 -8.27896e-05 0.983172 1.00129 1.00291 1.00112 1.00226 0.730774'/>
-    <key name="12" qpos='0 0 0 0 0 0 0 0 0 0 0 0'/>
-  </keyframe> -->
+
+  </keyframe>
 
   <actuator>
     <!-- Thumb -->
-    <position name="right_thumb_1_joint" joint="right_thumb_1_joint" kp="2" dampratio="0.1"/>
-    <position name="right_thumb_2_joint" joint="right_thumb_2_joint" kp="2" dampratio="0.1"/>
+    <position name="right_thumb_1_joint" joint="right_thumb_1_joint" kp="2" dampratio="0.1" inheritrange="1"/>
+    <position name="right_thumb_2_joint" joint="right_thumb_2_joint" kp="2" dampratio="0.1" inheritrange="1"/>
 
     <!-- Index -->
-    <position name="right_index_1_joint" joint="right_index_1_joint" kp="2" dampratio="0.1"/>
+    <position name="right_index_1_joint" joint="right_index_1_joint" kp="2" dampratio="0.1" inheritrange="1"/>
 
     <!-- Middle -->
-    <position name="right_middle_1_joint" joint="right_middle_1_joint" kp="2" dampratio="0.1"/>
+    <position name="right_middle_1_joint" joint="right_middle_1_joint" kp="2" dampratio="0.1" inheritrange="1"/>
 
     <!-- Ring -->
-    <position name="right_ring_1_joint" joint="right_ring_1_joint" kp="2" dampratio="0.1"/>
+    <position name="right_ring_1_joint" joint="right_ring_1_joint" kp="2" dampratio="0.1" inheritrange="1"/>
 
     <!-- Little -->
-    <position name="right_little_1_joint" joint="right_little_1_joint" kp="2" dampratio="0.1"/>
+    <position name="right_little_1_joint" joint="right_little_1_joint" kp="2" dampratio="0.1" inheritrange="1"/>
   </actuator>
 
   <equality>
