@@ -27,10 +27,15 @@ class SimNode(LeapHandBase):
         global action
         dif = np.abs(action - self.target_action)
         self.joint_move_ratio = dif / (np.max(dif) + 1e-6)
-
+        
+        print("target pos:",self.mj_model.key(key).qpos[:self.nj])
+        print("joint_move_ratio:",self.joint_move_ratio)
+        
     def cv2WindowKeyPressCallback(self, key):
         ret = super().cv2WindowKeyPressCallback(key)
-        print("key:", key)
+        if key != -1 :
+            print("key:", key)
+        
         if key == ord(' '):
             self.key_id += 1
             if self.key_id > 12:
@@ -50,15 +55,6 @@ class SimNode(LeapHandBase):
             "ring"  : self.mj_data.sensordata[96:128].tolist()
         }
         return self.obs
-
-    def get_sensor_data(self):
-        self.sensor_data={
-            "thumb": self.mj_data.sensordata[0:32].tolist(),
-            "index" : self.mj_data.sensordata[32:64].tolist(),
-            "mid" : self.mj_data.sensordata[64:96].tolist(),
-            "ring" : self.mj_data.sensordata[96:128].tolist()
-        }
-        return self.sensor_data
 
 cfg = LeapHandCfg()
 cfg.use_gaussian_renderer = False
@@ -101,13 +97,6 @@ if __name__ == "__main__":
             if len(obs_lst) < sim_node.mj_data.time * cfg.render_set["fps"]:
                 obs_lst.append(obs)
 
-            #  4 Sensor Arrays Visualization
-            thumb_array=np.array(sim_node.get_sensor_data()["thumb"]).reshape((8,4))
-            index_array=np.array(sim_node.get_sensor_data()["index"]).reshape((8,4))
-            mid_array=np.array(sim_node.get_sensor_data()["mid"]).reshape((8,4))
-            ring_array=np.array(sim_node.get_sensor_data()["ring"]).reshape((8,4))
-            # print(thumb_array)
-            # print("\n")
 
             # max_threshold=100.0
             # thumb_array=np.clip(thumb_array, amin=None, a_max=max_threshold)
@@ -118,13 +107,14 @@ if __name__ == "__main__":
         print(e)
     finally:
         if len(obs_lst):
-            import json
-            import mediapy
-            mediapy.write_video("leaphand.mp4", [o["img"][-1] for o in obs_lst], fps=cfg.render_set["fps"])
+            print("have data")
+            # import json
+            # import mediapy
+            # mediapy.write_video("leaphand.mp4", [o["img"][-1] for o in obs_lst], fps=cfg.render_set["fps"])
 
-            for fn in ["thumb", "index", "mid", "ring"]:
-                with open(f"{fn}.json", "w") as f:
-                    json.dump([o[f"{fn}"] for o in obs_lst], f)
+            # for fn in ["thumb", "index", "mid", "ring"]:
+            #     with open(f"{fn}.json", "w") as f:
+            #         json.dump([o[f"{fn}"] for o in obs_lst], f)
 
             # with open("leadphand.json", "w") as f:
                 # json.dump([o["fingers"] for o in obs_lst], f)
