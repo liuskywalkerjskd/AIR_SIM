@@ -95,7 +95,7 @@ cfg.timestep = 1 / 240
 cfg.decimation = 4
 cfg.sync = True
 cfg.headless = False
-cfg.render_set = {"fps": 20, "width": 448, "height": 448}
+cfg.render_set = {"fps": 20, "width": 1920, "height": 1080}
 cfg.obs_rgb_cam_id = [0, 1]
 cfg.save_mjb_and_task_config = True
 

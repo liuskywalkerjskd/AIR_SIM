@@ -1,0 +1,18 @@
+<mujoco model="air_arm">
+  <compiler meshdir="../../../meshes/" texturedir="../../../textures/"/>
+  <include file="../../airbot_play/airbot_play_dependencies.xml"/>
+  <include file="../../airbot_play/airbot_play_options.xml"/>
+  <include file="../../scene.xml"/>
+  <include file="../../object/usb_camera_dependencies.xml"/>
+
+    <default>
+        <default class="obj_visual">
+        <geom group="2" type="mesh" contype="0" conaffinity="0"/>
+        </default>
+        <default class="obj_collision">
+        <geom group="3" condim="6" solimp="2 1 0.01" solref="0.001 10" friction="5 0.05 0.001" type="mesh"/>
+        </default>
+    </default>
+    
+
+</mujoco>
