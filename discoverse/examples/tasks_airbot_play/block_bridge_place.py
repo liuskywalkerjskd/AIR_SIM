@@ -16,6 +16,7 @@ from discoverse.task_base import AirbotPlayTaskBase, recoder_airbot_play
 
 
 class SimNode(AirbotPlayTaskBase):
+    # 仿真节点
     def __init__(self, config: AirbotPlayCfg):
         super().__init__(config)
         self.camera_1_pose = (

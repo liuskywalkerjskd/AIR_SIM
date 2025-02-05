@@ -1,4 +1,4 @@
-<mujoco model="urdf_right_2025_1_17">
+<mujoco model="urdf_right_hand">
   <compiler angle="radian"/>
   
   <option solver="Newton" tolerance="1e-6" timestep=".001" integrator="RK4"/>
