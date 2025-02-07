@@ -91,6 +91,6 @@ if __name__ == "__main__":
     
     obs = exec_node.reset()
     
-    action = exec_node.init_joint_pose[:exec_node.nj]
+    action = exec_node.init_joint_ctrl[:exec_node.na]
     while exec_node.running:
         obs, pri_obs, rew, ter, info = exec_node.step(action)
