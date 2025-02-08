@@ -14,7 +14,9 @@ from discoverse import DISCOVERSE_ROOT_DIR , DISCOVERSE_ASSERT_DIR #引入仿真
 from discoverse.utils import get_body_tmat , step_func , SimpleStateMachine #获取旋转矩阵，步进，状态机
 
 from discoverse.envs.hand_with_arm_base import HandWithArmCfg #引入手臂基础配置
+from discoverse.task_base.hand_arm_task_base import HandArmTaskBase , recoder_hand_with_arm 
 
-class SimNode():
+class SimNode(HandArmTaskBase):
+    #仿真节点
     def __init__(self):
         pass
