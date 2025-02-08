@@ -68,7 +68,7 @@ cfg.sync = True
 cfg.decimation = 4
 cfg.headless = False
 cfg.render_set = {"fps": 20, "width": 1920, "height": 1080}
-#cfg.obs_rgb_cam_id = [0, 1]
+cfg.obs_rgb_cam_id = -1
 cfg.save_mjb_and_task_config = True
 
 if __name__ == "__main__":

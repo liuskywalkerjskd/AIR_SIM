@@ -45,7 +45,7 @@ class HandArmTaskBase(HandWithArmBase):
     }
     delay_cnt = 0
     reset_sig = False
-    cam_id = 0
+    cam_id = -1
 
     def resetState(self):
         super().resetState()
