@@ -87,7 +87,8 @@ class HandArmTaskBase(HandWithArmBase):
         # print(f"    camera_{self.cam_id} =\n({cam_xyz}\n{Rotation.from_quat(cam_wxyz[[1,2,3,0]]).as_matrix()})")
 
     def check_success(self):
-        raise NotImplementedError
+        return False
+        # raise NotImplementedError
     
     def cv2WindowKeyPressCallback(self, key):
         ret = super().cv2WindowKeyPressCallback(key)

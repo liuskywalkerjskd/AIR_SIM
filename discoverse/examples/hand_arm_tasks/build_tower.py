@@ -8,7 +8,7 @@ import argparse
 import multiprocessing as mp
 
 import traceback
-from discoverse.airbot_play import AirbotPlayFIK
+from discoverse.airbot_play import AirbotPlayIK_nopin
 from discoverse import DISCOVERSE_ROOT_DIR , DISCOVERSE_ASSERT_DIR #引入仿真器路径和模型路径
 
 from discoverse.utils import get_body_tmat , step_func , SimpleStateMachine #获取旋转矩阵，步进，状态机
@@ -78,7 +78,7 @@ cfg.obj_list = [
     "block_purple6",
 ]
 
-cfg.timestep = 1/240
+cfg.timestep = 0.001
 cfg.sync = True
 cfg.decimation = 4
 cfg.headless = False
@@ -118,7 +118,7 @@ if __name__ == "__main__":
             os.path.join(save_dir, os.path.basename(__file__)),
         )
     
-arm_ik = AirbotPlayFIK(
+arm_ik = AirbotPlayIK_nopin(
         os.path.join(DISCOVERSE_ASSERT_DIR, "urdf/airbot_play_v3_gripper_fixed.urdf")
     )
 
@@ -132,7 +132,7 @@ max_time = 60 #最大时间
 action = np.zeros(12) #动作空间
 process_list = []
 
-move_speed = 0.75
+move_speed = 0.2
 sim_node.reset()
 
 while sim_node.running:
@@ -144,30 +144,59 @@ while sim_node.running:
         
     try:
         if stm.trigger():
-            print(stm.state_idx)
+            #print(stm.state_idx)
+            #print("arm_qpos is:\n",sim_node.mj_data.qpos[:6])
             if stm.state_idx == 0:
-                # trmat = R.from_euler(
-                #     "xyz", [0.0, np.pi / 2, np.pi / 2], degrees=False
-                # ).as_matrix()
-                # tmat_bridge1 = get_body_tmat(sim_node.mj_data, "bridge1")
+                trmat = R.from_euler(
+                    "xyz", [0.0, np.pi / 2, np.pi / 2], degrees=False
+                ).as_matrix()
+                tmat_bridge1 = get_body_tmat(sim_node.mj_data, "bridge1")
                 # tmat_bridge1[:3, 3] = tmat_bridge1[:3, 3] + np.array(
                 #     [0.03, -0.015, 0.12]
                 # )
-                # tmat_tgt_local = tmat_armbase_2_world @ tmat_bridge1
-                # sim_node.target_control[:6] = arm_ik.properIK(
+                print(tmat_bridge1)
+                tmat_tgt_local = tmat_armbase_2_world @ tmat_bridge1
+                # print("\n",tmat_armbase_2_world)
+                # print("\n",sim_node.mj_data.qpos[:6])
+                
+                # print(tmat_tgt_local[:3, 3])
+                
+                # print(arm_ik.properIK(
                 #     tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
-                # )       
+                # ))
+                sim_node.target_control[:6] = arm_ik.properIK(
+                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                )       
                 
                 # for i in range(6, 12):
                 #     sim_node.target_control[i] = 1
-                for i in range(12):
+                # for i in range(12):
+                #     sim_node.target_control[i] = 0
+                    
+            elif stm.state_idx ==1 :
+                tmat_block1 = get_body_tmat(sim_node.mj_data, "block1_green")
+                # tmat_block1[:3, 3] = tmat_block1[:3, 3] + np.array([0, 0, 0.12])
+                tmat_block1[:3, 3] = tmat_block1[:3, 3]
+                tmat_tgt_local = tmat_armbase_2_world @ tmat_block1
+                sim_node.target_control[:6] = arm_ik.properIK(
+                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                )
+                
+            elif stm.state_idx == 3:  # 伸到长方体
+                tmat_block1 = get_body_tmat(sim_node.mj_data, "block1_green")
+                tmat_block1[:3, 3] = tmat_block1[:3, 3]
+                tmat_tgt_local = tmat_armbase_2_world @ tmat_block1
+                sim_node.target_control[:6] = arm_ik.properIK(
+                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                )
+
+            elif stm.state_idx >= 3 and stm.state_idx <= 500:
+                for i in range (12):
+                    sim_node.target_control[i] += 0
+            
+            for i in range(6, 12):
                     sim_node.target_control[i] = 0
                     
-            elif stm.state_idx >= 1:
-                for i in range(12):
-                    sim_node.target_control[i] += 0.01
-                 
-            
             dif = np.abs(action - sim_node.target_control)
             sim_node.joint_move_ratio = dif / (np.max(dif) + 1e-6)
 
