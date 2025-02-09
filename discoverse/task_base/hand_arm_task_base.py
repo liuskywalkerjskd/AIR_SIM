@@ -61,16 +61,18 @@ class HandArmTaskBase(HandWithArmBase):
         #根据反馈和设定值error判断动作完成
         #TODO:在补充好HandWithArmBase中的传感器等数据后，修改这里的动作完成判断方式（欠驱动不能直接这样写）
         
-        joint_done = np.allclose(self.sensor_joint_qpos[:6], self.target_control[:6], atol=3e-2) and np.abs(self.sensor_joint_qvel[:6]).sum() < 0.1
-        gripper_done = np.allclose(self.sensor_joint_qpos[6], self.target_control[6], atol=0.4) and np.abs(self.sensor_joint_qvel[6]).sum() < 0.125
-        self.delay_cnt -= 1
-        delay_done = (self.delay_cnt<=0)
-        self.action_done_dict = {
-            "joint"   : joint_done,
-            "gripper" : gripper_done,
-            "delay"   : delay_done,
-        }
-        return joint_done and gripper_done and delay_done
+        # joint_done = np.allclose(self.sensor_joint_qpos[:6], self.target_control[:6], atol=3e-2) and np.abs(self.sensor_joint_qvel[:6]).sum() < 0.1
+        # gripper_done = np.allclose(self.sensor_joint_qpos[6], self.target_control[6], atol=0.4) and np.abs(self.sensor_joint_qvel[6]).sum() < 0.125
+        # self.delay_cnt -= 1
+        # delay_done = (self.delay_cnt<=0)
+        # self.action_done_dict = {
+        #     "joint"   : joint_done,
+        #     "gripper" : gripper_done,
+        #     "delay"   : delay_done,
+        # }
+        # return joint_done and gripper_done and delay_done
+        
+        return True
 
     def printMessage(self):
         super().printMessage()

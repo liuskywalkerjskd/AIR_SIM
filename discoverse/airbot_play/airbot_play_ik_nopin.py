@@ -18,7 +18,7 @@ class AirbotPlayIK_nopin:
         [-1.,  0.,  0.]
     ])
 
-    def __init__(self) -> None:
+    def __init__(self,urdf) -> None:
         pass
 
     def properIK(self, pos, ori, ref_q=None):

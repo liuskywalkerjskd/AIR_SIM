@@ -8,7 +8,7 @@ import argparse
 import multiprocessing as mp
 
 import traceback
-from discoverse.airbot_play import AirbotPlayIK_nopin #使用这个进行逆运动学解算无需URDF
+from discoverse.airbot_play import AirbotPlayFIK
 from discoverse import DISCOVERSE_ROOT_DIR , DISCOVERSE_ASSERT_DIR #引入仿真器路径和模型路径
 
 from discoverse.utils import get_body_tmat , step_func , SimpleStateMachine #获取旋转矩阵，步进，状态机
@@ -44,7 +44,22 @@ def domain_randomization(self):
         
 def check_success(self):
     #检查是否成功
-    pass
+    tmat_bridge1 = get_body_tmat(self.mj_data, "bridge1")
+    tmat_bridge2 = get_body_tmat(self.mj_data, "bridge2")
+    tmat_block1 = get_body_tmat(self.mj_data, "block1_green")
+    tmat_block2 = get_body_tmat(self.mj_data, "block2_green")
+    tmat_block01 = get_body_tmat(self.mj_data, "block_purple3")
+    tmat_block02 = get_body_tmat(self.mj_data, "block_purple6")
+    return (
+        (abs(tmat_block1[2, 2]) < 0.001)
+        and (abs(abs(tmat_bridge1[1, 3] - tmat_bridge2[1, 3]) - 0.03) <= 0.002)
+        and (abs(tmat_block2[2, 2]) < 0.001)
+        and np.hypot(
+            tmat_block1[0, 3] - tmat_block01[0, 3],
+            tmat_block2[1, 3] - tmat_block02[1, 3],
+        )
+        < 0.11
+    )
 
 cfg = HandWithArmCfg()
 cfg.use_gaussian_renderer = False
@@ -103,13 +118,15 @@ if __name__ == "__main__":
             os.path.join(save_dir, os.path.basename(__file__)),
         )
     
-arm_ik  = AirbotPlayIK_nopin() #使用逆运动学解算器
+arm_ik = AirbotPlayFIK(
+        os.path.join(DISCOVERSE_ASSERT_DIR, "urdf/airbot_play_v3_gripper_fixed.urdf")
+    )
 
 trmat = R.from_euler("xyz", [0.0, np.pi / 2, 0.0], degrees=False).as_matrix()
 tmat_armbase_2_world = np.linalg.inv(get_body_tmat(sim_node.mj_data, "arm_base"))    
     
 stm = SimpleStateMachine() #有限状态机
-stm.max_state_cnt = 10 #最多状态数
+stm.max_state_cnt = 1000 #最多状态数
 max_time = 60 #最大时间
 
 action = np.zeros(12) #动作空间
@@ -126,21 +143,35 @@ while sim_node.running:
         act_lst, obs_lst = [], []
         
     try:
-        if stm.state_idx == 0:
-            trmat = R.from_euler(
-                "xyz", [0.0, np.pi / 2, np.pi / 2], degrees=False
-            ).as_matrix()
-            tmat_bridge1 = get_body_tmat(sim_node.mj_data, "bridge1")
-            tmat_bridge1[:3, 3] = tmat_bridge1[:3, 3] + np.array(
-                [0.03, -0.015, 0.12]
-            )
-            tmat_tgt_local = tmat_armbase_2_world @ tmat_bridge1
-            sim_node.target_control[:6] = arm_ik.properIK(
-                tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
-            )       
+        if stm.trigger():
+            print(stm.state_idx)
+            if stm.state_idx == 0:
+                # trmat = R.from_euler(
+                #     "xyz", [0.0, np.pi / 2, np.pi / 2], degrees=False
+                # ).as_matrix()
+                # tmat_bridge1 = get_body_tmat(sim_node.mj_data, "bridge1")
+                # tmat_bridge1[:3, 3] = tmat_bridge1[:3, 3] + np.array(
+                #     [0.03, -0.015, 0.12]
+                # )
+                # tmat_tgt_local = tmat_armbase_2_world @ tmat_bridge1
+                # sim_node.target_control[:6] = arm_ik.properIK(
+                #     tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                # )       
+                
+                # for i in range(6, 12):
+                #     sim_node.target_control[i] = 1
+                for i in range(12):
+                    sim_node.target_control[i] = 0
+                    
+            elif stm.state_idx >= 1:
+                for i in range(12):
+                    sim_node.target_control[i] += 0.01
+                 
+            
+            dif = np.abs(action - sim_node.target_control)
+            sim_node.joint_move_ratio = dif / (np.max(dif) + 1e-6)
 
-        elif stm.state_idx == 1:
-            pass 
+
         
         elif sim_node.mj_data.time > max_time:
             raise ValueError("Time Out")
@@ -148,7 +179,7 @@ while sim_node.running:
         else:
             stm.update()
             
-        if sim_node.check_ActionDone():
+        if sim_node.checkActionDone():
             stm.next()
             
     except ValueError as ve :
