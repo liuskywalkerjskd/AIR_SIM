@@ -44,16 +44,18 @@ class HandWithArmBase(SimulatorBase):
             self.init_joint_pose = np.zeros(self.nj)
             self.init_joint_ctrl = np.zeros(self.na)
 
-        # TODO:读取所有传感器数据
+        # TODO:补全读取触觉传感器数据
         
-        # self.sensor_joint_qpos = self.mj_data.sensordata[:self.nj]
-        # self.sensor_joint_qvel = self.mj_data.sensordata[self.nj:2*self.nj]
-        # self.sensor_joint_force = self.mj_data.sensordata[2*self.nj:3*self.nj]
-        # self.sensor_endpoint_posi_local = self.mj_data.sensordata[3*self.nj:3*self.nj+3]
-        # self.sensor_endpoint_quat_local = self.mj_data.sensordata[3*self.nj+3:3*self.nj+7]
-        # self.sensor_endpoint_linear_vel_local = self.mj_data.sensordata[3*self.nj+7:3*self.nj+10]
-        # self.sensor_endpoint_gyro = self.mj_data.sensordata[3*self.nj+10:3*self.nj+13]
-        # self.sensor_endpoint_acc = self.mj_data.sensordata[3*self.nj+13:3*self.nj+16]
+        self.sensor_arm_qpos = self.mj_data.sensordata[:6]
+        self.sensor_arm_qvel = self.mj_data.sensordata[6:2*6]
+        self.sensor_arm_force = self.mj_data.sensordata[2*6:3*6]
+        self.sensor_endpoint_posi_local = self.mj_data.sensordata[3*6:3*6+3]
+        self.sensor_endpoint_quat_local = self.mj_data.sensordata[3*6+3:3*6+7]
+        self.sensor_endpoint_linear_vel_local = self.mj_data.sensordata[3*6+7:3*6+10]
+        self.sensor_endpoint_gyro = self.mj_data.sensordata[3*6+10:3*6+13]
+        self.sensor_endpoint_acc = self.mj_data.sensordata[3*6+13:3*6+16]
+        
+        self.sensor_finger_qpos = self.mj_data.sensordata[3*6+16:3*6+16+6] #手指主动关节的角度
 
     def printMessage(self):
         # TODO:终端打印必要信息
@@ -89,16 +91,18 @@ class HandWithArmBase(SimulatorBase):
     def getObservation(self):
         #获取观测量
         self.obs = {
-            "time" : self.mj_data.time
-            # TODO:添加观测量
-            
-            # "jq"   : self.sensor_joint_qpos.tolist(),
-            # "jv"   : self.sensor_joint_qvel.tolist(),
-            # "jf"   : self.sensor_joint_force.tolist(),
-            # "ep"   : self.sensor_endpoint_posi_local.tolist(),
-            # "eq"   : self.sensor_endpoint_quat_local.tolist(),
+            "time" : self.mj_data.time,
+            # TODO:添加触觉观测量
+            "jq"   : self.sensor_arm_qpos.tolist(),
+            "jv"   : self.sensor_arm_qvel.tolist(),
+            "jf"   : self.sensor_arm_force.tolist(),
+            "ep"   : self.sensor_endpoint_posi_local.tolist(),
+            "eq"   : self.sensor_endpoint_quat_local.tolist(),
+            "fq"   : self.sensor_finger_qpos.tolist()
             # "img"  : self.img_rgb_obs_s
         }
+        
+        #print(self.obs)
         return self.obs
 
     def getPrivilegedObservation(self):

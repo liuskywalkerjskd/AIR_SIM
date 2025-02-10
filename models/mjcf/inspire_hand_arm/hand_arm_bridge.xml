@@ -37,7 +37,7 @@
 
   <worldbody>
     <!-- ======= 原机械臂结构 ======= -->
-    <body name="arm_base" pos="0 -0.1 0.78" euler="0 0 1.57">
+    <body name="arm_base" pos="0 -0.05 0.78" euler="0 0 1.57">
       <!-- 原机械臂的几何定义... -->
       <geom type="box" pos="-0.02 0 0.005" size="0.0806 0.1375 0.0025" rgba="0.2 0.2 0.2 1"/>
       <geom mesh="arm_base_0" pos="0 0 -0.0015" material="________________Emissive_White__1_2" class="visual"/>
@@ -299,8 +299,6 @@
 
   <sensor>
 
-    <include file="hand_mjcf/sensor_include/palm_touch_include.xml"/>
-
     <jointpos name="joint1_pos" joint="joint1" />
     <jointpos name="joint2_pos" joint="joint2" />
     <jointpos name="joint3_pos" joint="joint3" />
@@ -327,6 +325,16 @@
     <framelinvel name="endpoint_vel" objtype="site" objname="endpoint" reftype="body" refname="arm_base"/>
     <gyro name="endpoint_gyro" site="endpoint"/>
     <accelerometer name="endpoint_acc" site="endpoint" />
+
+    <jointpos name="thumb_pos_1" joint="right_thumb_1_joint" />
+    <jointpos name="thumb_pos_2" joint="right_thumb_2_joint" />
+    <jointpos name="index_pos" joint="right_index_1_joint" />
+    <jointpos name="middle_pos" joint="right_middle_1_joint" />
+    <jointpos name="ring_pos" joint="right_ring_1_joint" />
+    <jointpos name="little_pos" joint="right_little_1_joint" />
+
+    <include file="hand_mjcf/sensor_include/palm_touch_include.xml"/>
+
   </sensor>
 
   <keyframe>
