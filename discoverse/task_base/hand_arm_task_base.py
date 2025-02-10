@@ -61,7 +61,7 @@ class HandArmTaskBase(HandWithArmBase):
         #根据反馈和设定值error判断动作完成
         #TODO:融入触觉数据进行任务完成的判断
         
-        joint_done = np.allclose(self.sensor_arm_qpos[:6], self.target_control[:6], atol=3e-2) and np.abs(self.sensor_arm_qvel[:6]).sum() < 0.1 and np.allclose(self.sensor_finger_qpos[:6],self.target_control[6:12], atol=5e-2)
+        joint_done = np.allclose(self.sensor_arm_qpos[:6], self.target_control[:6], atol=3e-2) and np.abs(self.sensor_arm_qvel[:6]).sum() < 0.1 and np.allclose(self.sensor_finger_qpos[:6],self.target_control[6:12], atol=1e-2)
         # gripper_done = np.allclose(self.sensor_joint_qpos[6], self.target_control[6], atol=0.4) and np.abs(self.sensor_joint_qvel[6]).sum() < 0.125
         self.delay_cnt -= 1
         delay_done = (self.delay_cnt<=0)
