@@ -150,12 +150,14 @@ while sim_node.running:
                 trmat = R.from_euler(
                     "xyz", [0.0, np.pi / 2, np.pi / 2], degrees=False
                 ).as_matrix()
-                tmat_bridge1 = get_body_tmat(sim_node.mj_data, "bridge1")
-                tmat_bridge1[:3, 3] = tmat_bridge1[:3, 3] + np.array(
-                    [0.03, -0.015, 0.12]
+                tmat_block_2 = get_body_tmat(sim_node.mj_data, "block2_green")
+                tmat_block_2[:3, 3] = tmat_block_2[:3, 3] + np.array(
+                    [0, 0, 0.1]
                 )
-                print(tmat_bridge1)
-                tmat_tgt_local = tmat_armbase_2_world @ tmat_bridge1
+
+                
+                print(tmat_block_2)
+                tmat_tgt_local = tmat_armbase_2_world @ tmat_block_2
                 # print("\n",tmat_armbase_2_world)
                 # print("\n",sim_node.mj_data.qpos[:6])
                 
@@ -173,14 +175,14 @@ while sim_node.running:
                 # for i in range(12):
                 #     sim_node.target_control[i] = 0
                     
-            elif stm.state_idx ==1 :
-                tmat_block1 = get_body_tmat(sim_node.mj_data, "block1_green")
-                # tmat_block1[:3, 3] = tmat_block1[:3, 3] + np.array([0, 0, 0.12])
-                tmat_block1[:3, 3] = tmat_block1[:3, 3]
-                tmat_tgt_local = tmat_armbase_2_world @ tmat_block1
-                sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
-                )
+            # elif stm.state_idx ==1 :
+            #     tmat_block1 = get_body_tmat(sim_node.mj_data, "block1_green")
+            #     # tmat_block1[:3, 3] = tmat_block1[:3, 3] + np.array([0, 0, 0.12])
+            #     tmat_block1[:3, 3] = tmat_block1[:3, 3]
+            #     tmat_tgt_local = tmat_armbase_2_world @ tmat_block1
+            #     sim_node.target_control[:6] = arm_ik.properIK(
+            #         tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+            #     )
                 
             # elif stm.state_idx == 3:  # 伸到长方体
             #     tmat_block1 = get_body_tmat(sim_node.mj_data, "block1_green")
