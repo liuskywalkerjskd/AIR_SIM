@@ -8,7 +8,7 @@ import argparse
 import multiprocessing as mp
 
 import traceback
-from discoverse.airbot_play import AirbotPlayIK_nopin
+from discoverse.airbot_play import AirbotPlayIK_nopin #机械臂逆运动学解算
 from discoverse import DISCOVERSE_ROOT_DIR , DISCOVERSE_ASSERT_DIR #引入仿真器路径和模型路径
 
 from discoverse.utils import get_body_tmat , step_func , SimpleStateMachine #获取旋转矩阵，步进，状态机
@@ -146,58 +146,56 @@ while sim_node.running:
         if stm.trigger():
             print(stm.state_idx)
             #print("arm_qpos is:\n",sim_node.mj_data.qpos[:6])
-            if stm.state_idx == 0:
+            if stm.state_idx == 0: 
+                sim_node.target_control[6:] = [1, 0.3, 0, 0, 0, 0]
+                
+            elif stm.state_idx == 1: #移动到第一个绿色柱子上方
                 trmat = R.from_euler(
                     "xyz", [0.0, np.pi / 2, np.pi / 2], degrees=False
                 ).as_matrix()
                 tmat_block_2 = get_body_tmat(sim_node.mj_data, "block2_green")
                 tmat_block_2[:3, 3] = tmat_block_2[:3, 3] + np.array(
-                    [0, 0, 0.1]
+                    [0.035, -0.01, 0.08]
                 )
-
                 
-                print(tmat_block_2)
                 tmat_tgt_local = tmat_armbase_2_world @ tmat_block_2
-                # print("\n",tmat_armbase_2_world)
-                # print("\n",sim_node.mj_data.qpos[:6])
-                
-                # print(tmat_tgt_local[:3, 3])
-                
-                # print(arm_ik.properIK(
-                #     tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
-                # ))
+
+                #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
                     tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
-                )       
+                )
+                sim_node.target_control[6:] = [1, 0.3, 0, 0, 0, 0]
                 
-                # for i in range(6, 12):
-                #     sim_node.target_control[i] = 1
-                # for i in range(12):
-                #     sim_node.target_control[i] = 0
                     
-            # elif stm.state_idx ==1 :
-            #     tmat_block1 = get_body_tmat(sim_node.mj_data, "block1_green")
-            #     # tmat_block1[:3, 3] = tmat_block1[:3, 3] + np.array([0, 0, 0.12])
-            #     tmat_block1[:3, 3] = tmat_block1[:3, 3]
-            #     tmat_tgt_local = tmat_armbase_2_world @ tmat_block1
-            #     sim_node.target_control[:6] = arm_ik.properIK(
-            #         tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
-            #     )
+            elif stm.state_idx ==2 :
+                for i in range(6):
+                    sim_node.target_control[i] += 0
+                sim_node.target_control[6:] = [1.1, 0.37, 0.6, 0, 0, 0]
                 
-            # elif stm.state_idx == 3:  # 伸到长方体
-            #     tmat_block1 = get_body_tmat(sim_node.mj_data, "block1_green")
-            #     tmat_block1[:3, 3] = tmat_block1[:3, 3]
-            #     tmat_tgt_local = tmat_armbase_2_world @ tmat_block1
-            #     sim_node.target_control[:6] = arm_ik.properIK(
-            #         tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
-            #     )
+            elif stm.state_idx == 3:  # 伸到长方体
+                trmat = R.from_euler(
+                    "xyz", [0.0, np.pi / 2, np.pi / 2], degrees=False
+                ).as_matrix()
+                tmat_block_2 = get_body_tmat(sim_node.mj_data, "block2_green")
+                tmat_block_2[:3, 3] = tmat_block_2[:3, 3] + np.array(
+                    [0.035, -0.01, 0.15]
+                )
+                
+                tmat_tgt_local = tmat_armbase_2_world @ tmat_block_2
+
+                #逆运动学求解机械臂六自由度控制值    
+                sim_node.target_control[:6] = arm_ik.properIK(
+                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                )
+                sim_node.target_control[6:] = [1.1, 0.37, 0.6, 0, 0, 0] 
 
             elif stm.state_idx >= 3 and stm.state_idx <= 500:
                 for i in range (12):
                     sim_node.target_control[i] += 0
+                sim_node.target_control[6:] = [1.1, 0.37, 0.6, 0, 0, 0]
             
-            for i in range(6, 12):
-                    sim_node.target_control[i] = 0
+            # for i in range(6, 12):
+            #         sim_node.target_control[i] = 0
                     
             dif = np.abs(action - sim_node.target_control)
             sim_node.joint_move_ratio = dif / (np.max(dif) + 1e-6)
