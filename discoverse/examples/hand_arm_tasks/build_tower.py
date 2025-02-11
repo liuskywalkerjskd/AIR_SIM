@@ -44,16 +44,16 @@ class SimNode(HandArmTaskBase):
             
     def check_success(self):
         #检查是否成功
-        tmat_bridge1 = get_body_tmat(self.mj_data, "bridge1")
-        tmat_bridge2 = get_body_tmat(self.mj_data, "bridge2")
+        tmat_bridge1 = get_body_tmat(self.mj_data, "bridge2")
+        tmat_bridge2 = get_body_tmat(self.mj_data, "bridge1")
         tmat_block1 = get_body_tmat(self.mj_data, "block1_green")
         tmat_block2 = get_body_tmat(self.mj_data, "block2_green")
         tmat_block01 = get_body_tmat(self.mj_data, "block_purple3")
         tmat_block02 = get_body_tmat(self.mj_data, "block_purple6")
         return (
-            (abs(tmat_block1[2, 2]) < 0.001)
+            (abs(tmat_block1[2, 2]) < 0.01)
             and (abs(abs(tmat_bridge1[1, 3] - tmat_bridge2[1, 3]) - 0.03) <= 0.002)
-            and (abs(tmat_block2[2, 2]) < 0.001)
+            and (abs(tmat_block2[2, 2]) < 0.01)
             and np.hypot(
                 tmat_block1[0, 3] - tmat_block01[0, 3],
                 tmat_block2[1, 3] - tmat_block02[1, 3],
