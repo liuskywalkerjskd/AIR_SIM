@@ -13,22 +13,24 @@ def recoder_hand_with_arm(save_path, act_lst, obs_lst, cfg):
     
     #TODO:在补充好HandWithArmBase中的传感器等数据后，修改这里的数据保存方式
     
-    print("recoder_hand_with_arm")
     
-    # if os.path.exists(save_path):
-    #     shutil.rmtree(save_path)
-    # os.makedirs(save_path, exist_ok=True)
+    
+    if os.path.exists(save_path):
+        shutil.rmtree(save_path)
+    os.makedirs(save_path, exist_ok=True)
 
-    # with open(os.path.join(save_path, "obs_action.json"), "w") as fp:
-    #     obj = {
-    #         "time" : [o['time'] for o in obs_lst],
-    #         "obs"  : {
-    #             "jq" : [o['jq'] for o in obs_lst],
-    #         },
-    #         "act"  : act_lst,
-    #     }
-    #     json.dump(obj, fp)
+    with open(os.path.join(save_path, "obs_action.json"), "w") as fp:
+        obj = {
+            "time" : [o['time'] for o in obs_lst],
+            "obs"  : {
+                "jq" : [o['jq'] for o in obs_lst],
+                "fq" : [o['fq'] for o in obs_lst],
+            },
+            "act"  : act_lst,
+        }
+        json.dump(obj, fp)
 
+    print("recoder_hand_with_arm")
     # for id in cfg.obs_rgb_cam_id:
     #     #保存相机数据
     #     mediapy.write_video(os.path.join(save_path, f"cam_{id}.mp4"), [o['img'][id] for o in obs_lst], fps=cfg.render_set["fps"])
