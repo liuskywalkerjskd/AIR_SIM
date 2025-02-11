@@ -467,7 +467,7 @@ while sim_node.running:
             elif stm.state_idx == 28:  # 将木块移动到桥旁边上方
                 tmat_bridge = get_body_tmat(sim_node.mj_data, "bridge1")
                 tmat_bridge[:3, 3] = tmat_bridge[:3, 3] + np.array(
-                    [0.018, -0.02, 0.25]
+                    [0.01, -0.02, 0.25]
                 )
                 
                 tmat_tgt_local = tmat_armbase_2_world @ tmat_bridge
@@ -480,7 +480,7 @@ while sim_node.running:
             elif stm.state_idx ==29:  # 将木块移动下去
                 tmat_bridge = get_body_tmat(sim_node.mj_data, "bridge1")
                 tmat_bridge[:3, 3] = tmat_bridge[:3, 3] + np.array(
-                    [0.018, -0.02, 0.17]
+                    [0.01, -0.02, 0.17]
                 )
                 
                 tmat_tgt_local = tmat_armbase_2_world @ tmat_bridge
@@ -496,7 +496,7 @@ while sim_node.running:
             elif stm.state_idx == 31:  # 抬起
                 tmat_bridge = get_body_tmat(sim_node.mj_data, "bridge1")
                 tmat_bridge[:3, 3] = tmat_bridge[:3, 3] + np.array(
-                    [0.02, -0.02, 0.25]
+                    [0.01, -0.02, 0.25]
                 )
                 
                 tmat_tgt_local = tmat_armbase_2_world @ tmat_bridge
@@ -510,7 +510,7 @@ while sim_node.running:
                 trmat = R.from_euler(
                     "xyz", [0.0, np.pi / 2, np.pi / 2], degrees=False
                 ).as_matrix()
-                tmat_cube_1 = get_body_tmat(sim_node.mj_data, "block_purple4")
+                tmat_cube_1 = get_body_tmat(sim_node.mj_data, "block_purple3")
                 tmat_cube_1[:3, 3] = tmat_cube_1[:3, 3] + np.array(
                     [0.035, -0.01, 0.2]
                 )
@@ -527,7 +527,7 @@ while sim_node.running:
                 trmat = R.from_euler(
                     "xyz", [0.0, np.pi / 2, np.pi / 2], degrees=False
                 ).as_matrix()
-                tmat_cube_1 = get_body_tmat(sim_node.mj_data, "block_purple4")
+                tmat_cube_1 = get_body_tmat(sim_node.mj_data, "block_purple3")
                 tmat_cube_1[:3, 3] = tmat_cube_1[:3, 3] + np.array(
                     [0.035, -0.01, 0.07]
                 )
@@ -547,7 +547,7 @@ while sim_node.running:
                 trmat = R.from_euler(
                     "xyz", [0.0, np.pi / 2, np.pi / 2], degrees=False
                 ).as_matrix()
-                tmat_cube_1 = get_body_tmat(sim_node.mj_data, "block_purple4")
+                tmat_cube_1 = get_body_tmat(sim_node.mj_data, "block_purple3")
                 tmat_cube_1[:3, 3] = tmat_cube_1[:3, 3] + np.array(
                     [0.035, -0.01, 0.2]
                 )
@@ -562,7 +562,7 @@ while sim_node.running:
             elif stm.state_idx == 36:  # 将木块移动到桥旁边上方
                 tmat_bridge = get_body_tmat(sim_node.mj_data, "bridge1")
                 tmat_bridge[:3, 3] = tmat_bridge[:3, 3] + np.array(
-                    [0.018, -0.02, 0.25]
+                    [0.02, -0.02, 0.25]
                 )
                 
                 tmat_tgt_local = tmat_armbase_2_world @ tmat_bridge
@@ -575,7 +575,7 @@ while sim_node.running:
             elif stm.state_idx ==37:  # 将木块移动下去
                 tmat_bridge = get_body_tmat(sim_node.mj_data, "bridge1")
                 tmat_bridge[:3, 3] = tmat_bridge[:3, 3] + np.array(
-                    [0.018, -0.02, 0.22]
+                    [0.02, -0.02, 0.22]
                 )
                 
                 tmat_tgt_local = tmat_armbase_2_world @ tmat_bridge
@@ -605,7 +605,7 @@ while sim_node.running:
                 trmat = R.from_euler(
                     "xyz", [0.0, np.pi / 2, np.pi / 2], degrees=False
                 ).as_matrix()
-                tmat_cube_1 = get_body_tmat(sim_node.mj_data, "block_purple3")
+                tmat_cube_1 = get_body_tmat(sim_node.mj_data, "block_purple4")
                 tmat_cube_1[:3, 3] = tmat_cube_1[:3, 3] + np.array(
                     [0.035, -0.01, 0.2]
                 )
@@ -622,7 +622,7 @@ while sim_node.running:
                 trmat = R.from_euler(
                     "xyz", [0.0, np.pi / 2, np.pi / 2], degrees=False
                 ).as_matrix()
-                tmat_cube_1 = get_body_tmat(sim_node.mj_data, "block_purple3")
+                tmat_cube_1 = get_body_tmat(sim_node.mj_data, "block_purple4")
                 tmat_cube_1[:3, 3] = tmat_cube_1[:3, 3] + np.array(
                     [0.035, -0.01, 0.07]
                 )
@@ -642,7 +642,7 @@ while sim_node.running:
                 trmat = R.from_euler(
                     "xyz", [0.0, np.pi / 2, np.pi / 2], degrees=False
                 ).as_matrix()
-                tmat_cube_1 = get_body_tmat(sim_node.mj_data, "block_purple3")
+                tmat_cube_1 = get_body_tmat(sim_node.mj_data, "block_purple4")
                 tmat_cube_1[:3, 3] = tmat_cube_1[:3, 3] + np.array(
                     [0.035, -0.01, 0.2]
                 )
