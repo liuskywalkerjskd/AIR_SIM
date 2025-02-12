@@ -17,7 +17,7 @@ class HandWithArmCfg(BaseConfig):
         "width"  : 1920,
         "height" : 1080,
     }
-    obs_rgb_cam_id  = 1
+    obs_rgb_cam_id  = [0,1]
     rb_link_list   = ["arm_base", "link1", "link2", "link3", "link4", "link5", "link6", 
                       "base_link", "palm_link", "palm_link_1", 
                       "right_thumb_1", "right_thumb_2", "right_thumb_3", "right_thumb_4", 
