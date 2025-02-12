@@ -4,6 +4,9 @@
   <include file="../airbot_play/airbot_play_dependencies.xml"/>
   <include file="../object/bridge_dependencies.xml"/>
 
+  <include file="../object/usb_camera_dependencies.xml"/>
+
+
   <option integrator="RK4" solver="Newton" />
   <compiler angle="radian" inertiafromgeom="auto" inertiagrouprange="4 5" meshdir="../../meshes/" texturedir="../../textures/"/>
   <size njmax="10000" nconmax="10000"/>
@@ -69,6 +72,7 @@
                 <geom mesh="link5_0" material="Paint_Matte_Black" class="visual"/>
                 <geom mesh="link5_1" material="Paint_Metallic_Cool_Grey" class="visual"/>
                 <body name="link6" pos="0 0.070314 0" quat="0.499998 -0.5 0.5 0.500002">
+
                   <inertial pos="-0.0047053 7.3857e-05 -0.12293" mass="0.53855" diaginertia="5e-05 5e-05 3.85e-05"/>
                   <joint name="joint6" class="joint6"/>
                   <site name="endpoint" pos='0 0 0' euler="0 -1.5708 0" size='0.001' type='sphere'/>
@@ -78,6 +82,9 @@
                     </body>
                     
                     <body name="palm_link" pos="0 0 0.041" quat="0.707388 0 0 0.706825">
+                      <body pos="-0.105 0 -0.12" euler="3.1416 0 1.5708">
+                        <camera name="eye" euler="-0.5236 0 0" fovy="72.5376526571421"/>
+                      </body>
                       <include file="hand_mjcf/convex_dec_include/palm_Link_geom_include.xml"/>
                       <include file="hand_mjcf/sensor_include/palm_site_include.xml"/>
                     </body>
