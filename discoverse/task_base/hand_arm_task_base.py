@@ -30,11 +30,12 @@ def recoder_hand_with_arm(save_path, act_lst, obs_lst, cfg):
         }
         json.dump(obj, fp)
 
-    print("recoder_hand_with_arm")
+    print("data saved")
     for id in cfg.obs_rgb_cam_id:
         #保存相机数据
         mediapy.write_video(os.path.join(save_path, f"cam_{id}.mp4"), [o['img'][id] for o in obs_lst], fps=cfg.render_set["fps"])
-
+    print("mp4 saved")
+    
 class HandArmTaskBase(HandWithArmBase):
     #机器人执行器数量 机械臂 6 + 手 6 = 12
     target_control = np.zeros(12)
