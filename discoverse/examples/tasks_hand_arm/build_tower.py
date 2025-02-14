@@ -135,6 +135,13 @@ process_list = []
 move_speed = 0.5
 sim_node.reset()
 
+#手掌旋转矩阵，使得规划后手掌掌心朝下便于抓取
+transfor = np.array([
+        [0, 0, -1],
+        [-1, 0, 0],
+        [0, 1, 0]
+    ])
+
 while sim_node.running:
     if sim_node.reset_sig:
         sim_node.reset_sig = False
@@ -162,7 +169,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
                 sim_node.target_control[6:] = [1, 0.3, 0, 0, 0, 0]
                 
@@ -185,7 +192,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
                 sim_node.target_control[6:] = [1.1, 0.37, 0.6, 0, 0, 0] 
 
@@ -199,7 +206,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
             
             elif stm.state_idx == 5:  # 将木块移动下去
@@ -212,7 +219,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
             
             elif stm.state_idx == 6:  # 松手
@@ -228,7 +235,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
             
             elif stm.state_idx == 8: #移动到第二个绿色柱子上方
@@ -244,7 +251,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
                 sim_node.target_control[6:] = [1, 0.3, 0, 0, 0, 0]
             
@@ -266,7 +273,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
                 sim_node.target_control[6:] = [1.1, 0.37, 0.6, 0, 0, 0] 
             
@@ -280,7 +287,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
             
             elif stm.state_idx == 12:  # 将木块移动下去
@@ -293,7 +300,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
             
             elif stm.state_idx == 13:  # 松手
@@ -309,7 +316,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
             
             elif stm.state_idx == 15:  # 手指适当弯曲便于抓取紫色立方体
@@ -328,7 +335,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
                 sim_node.target_control[6:] = [1.1, 0.3, 0.5, 0.5, 0.5, 0.5]
             
@@ -345,7 +352,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
                 sim_node.target_control[6:] = [1.1, 0.3, 0.4, 0.4, 0.4, 0.4]
 
@@ -365,7 +372,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
                 
 
@@ -379,7 +386,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
             
             elif stm.state_idx ==21:  # 将木块移动下去
@@ -392,7 +399,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
             
             elif stm.state_idx == 22:  # 松手
@@ -408,7 +415,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
             
             elif stm.state_idx == 24: #移动到第二个紫色立方体上方
@@ -424,7 +431,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
                 sim_node.target_control[6:] = [1.1, 0.3, 0.5, 0.5, 0.5, 0.5]
             
@@ -441,7 +448,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
                 sim_node.target_control[6:] = [1.1, 0.3, 0.4, 0.4, 0.4, 0.4]
 
@@ -461,7 +468,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
 
             elif stm.state_idx == 28:  # 将木块移动到桥旁边上方
@@ -474,7 +481,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
             
             elif stm.state_idx ==29:  # 将木块移动下去
@@ -487,7 +494,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
             
             elif stm.state_idx == 30:  # 松手
@@ -503,7 +510,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
                 
             elif stm.state_idx == 32: #移动到第三个紫色立方体上方
@@ -519,7 +526,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
                 sim_node.target_control[6:] = [1.1, 0.3, 0.5, 0.5, 0.5, 0.5]
             
@@ -536,7 +543,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
                 sim_node.target_control[6:] = [1.1, 0.3, 0.4, 0.4, 0.4, 0.4]
 
@@ -556,7 +563,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
 
             elif stm.state_idx == 36:  # 将木块移动到桥旁边上方
@@ -569,7 +576,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
             
             elif stm.state_idx ==37:  # 将木块移动下去
@@ -582,7 +589,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
             
             elif stm.state_idx == 38:  # 松手
@@ -598,7 +605,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
             
             elif stm.state_idx == 40: #移动到第四个紫色立方体上方
@@ -614,7 +621,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
                 sim_node.target_control[6:] = [1.1, 0.3, 0.5, 0.5, 0.5, 0.5]
             
@@ -631,7 +638,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
                 sim_node.target_control[6:] = [1.1, 0.3, 0.4, 0.4, 0.4, 0.4]
 
@@ -651,7 +658,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
 
             elif stm.state_idx == 44:  # 将木块移动到桥旁边上方
@@ -664,7 +671,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
             
             elif stm.state_idx ==45:  # 将木块移动下去
@@ -677,7 +684,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
             
             elif stm.state_idx == 46:  # 松手
@@ -693,7 +700,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
             
             elif stm.state_idx == 48: #移动到第五个紫色立方体上方
@@ -709,7 +716,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
                 sim_node.target_control[6:] = [1.1, 0.3, 0.5, 0.5, 0.5, 0.5]
             
@@ -726,7 +733,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
                 sim_node.target_control[6:] = [1.1, 0.3, 0.4, 0.4, 0.4, 0.4]
 
@@ -746,7 +753,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
 
             elif stm.state_idx == 52:  # 将木块移动到桥旁边上方
@@ -759,7 +766,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
             
             elif stm.state_idx ==53:  # 将木块移动下去
@@ -772,7 +779,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
             
             elif stm.state_idx == 54:  # 松手
@@ -788,7 +795,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
                 
             elif stm.state_idx == 56: #移动到第六个紫色立方体上方
@@ -804,7 +811,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
                 sim_node.target_control[6:] = [1.1, 0.3, 0.5, 0.5, 0.5, 0.5]
             
@@ -821,7 +828,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
                 sim_node.target_control[6:] = [1.1, 0.3, 0.4, 0.4, 0.4, 0.4]
 
@@ -841,7 +848,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
 
             elif stm.state_idx == 60:  # 将木块移动到桥旁边上方
@@ -854,7 +861,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
             
             elif stm.state_idx ==61:  # 将木块移动下去
@@ -867,7 +874,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
             
             elif stm.state_idx == 62:  # 松手
@@ -883,7 +890,7 @@ while sim_node.running:
 
                 #逆运动学求解机械臂六自由度控制值    
                 sim_node.target_control[:6] = arm_ik.properIK(
-                    tmat_tgt_local[:3, 3], trmat, sim_node.mj_data.qpos[:6]
+                    tmat_tgt_local[:3, 3], trmat@transfor, sim_node.mj_data.qpos[:6]
                 )
             
             # else :
