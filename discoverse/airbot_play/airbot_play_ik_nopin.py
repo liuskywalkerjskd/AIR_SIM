@@ -18,20 +18,20 @@ class AirbotPlayIK_nopin:
         [-1.,  0.,  0.]
     ])
     
-    # rot_x_90 = np.array([
-    #     [1, 0, 0],
-    #     [0, 0, -1],
-    #     [0, 1, 0]
-    # ])
-    # # 绕 Z 轴旋转 90°
-    # rot_z_90 = np.array([
-    #     [0, -1, 0],
-    #     [1,  0, 0],
-    #     [0,  0, 1]
-    # ])
+    rot_x_90 = np.array([
+        [1, 0, 0],
+        [0, 0, -1],
+        [0, 1, 0]
+    ])
+    # 绕 Z 轴旋转 90°
+    rot_z_90 = np.array([
+        [0, -1, 0],
+        [1,  0, 0],
+        [0,  0, 1]
+    ])
 
-    # # 将旋转矩阵应用到目标姿态
-    # arm_rot_mat = arm_rot_mat @ rot_x_90 @ rot_z_90 # 末端目标姿态先绕x转90度再绕z转90度
+    # 将旋转矩阵应用到目标姿态
+    arm_rot_mat = arm_rot_mat @ rot_x_90 @ rot_z_90 # 末端目标姿态先绕x转90度再绕z转90度
 
     def __init__(self,urdf) -> None:
         pass
