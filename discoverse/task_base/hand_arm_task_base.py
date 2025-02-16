@@ -21,14 +21,14 @@ def recoder_hand_with_arm(save_path, act_lst, obs_lst, cfg):
 
     with open(os.path.join(save_path, "obs_action.json"), "w") as fp:
         obj = {
-            "time" : [o['time'] for o in obs_lst],
-            "obs"  : {
-                "jq" : [o['jq'] for o in obs_lst],
-                "fq" : [o['fq'] for o in obs_lst],
+            "time": [o['time'] for o in obs_lst],
+            "obs": {
+                "jq": [jq + fq for jq, fq in zip([o['jq'] for o in obs_lst], [o['fq'] for o in obs_lst])],
             },
-            "act"  : act_lst,
+            "act": act_lst,
         }
         json.dump(obj, fp)
+
 
     print("data saved")
     for id in cfg.obs_rgb_cam_id:
