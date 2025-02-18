@@ -1,5 +1,6 @@
 import numpy as np
 import pinocchio as pin
+from pinochio import SE3
 from scipy.spatial.transform import Rotation
 
 class AirbotPlayFIK:
@@ -24,14 +25,14 @@ class AirbotPlayFIK:
         self.pin_model = pin.buildModelFromUrdf(urdf)
         self.pin_data = self.pin_model.createData()
 
-    def forwardKin(self, q) -> pin.SE3:
+    def forwardKin(self, q) -> SE3:
         pin.forwardKinematics(self.pin_model, self.pin_data, q)
         return self.pin_data.oMi[6]
 
     def properIK(self, pos, ori, ref_q=None):
         return self.inverseKin(pos, ori @ self.arm_rot_mat, ref_q)
 
-    def properFK(self, q) -> pin.SE3:
+    def properFK(self, q) -> SE3:
         eoMi = self.forwardKin(np.array(q))
         tmat = np.eye(4)
         tmat[:3,:3] = eoMi.rotation @ self.arm_rot_mat.T
