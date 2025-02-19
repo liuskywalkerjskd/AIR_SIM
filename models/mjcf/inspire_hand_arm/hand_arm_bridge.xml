@@ -86,8 +86,8 @@
                     </body>
                     
                     <body name="palm_link" pos="0 0 0.041" quat="0.707388 0 0 0.706825">
-                      <body pos="-0.105 0 -0.12" euler="3.1416 0 1.5708">
-                        <camera name="eye" euler="-0.5236 0 0" fovy="72.5376526571421"/>
+                      <body pos="0 0 0" euler="0 0 0">
+                        <camera name="eye" fovy="72.02" pos="-0.02 -0.015 0.08" xyaxes="1 0 0  0 0 -1"/>
                       </body>
                       <include file="hand_mjcf/convex_dec_include/palm_Link_geom_include.xml"/>
                       <include file="hand_mjcf/sensor_include/palm_site_include.xml"/>
