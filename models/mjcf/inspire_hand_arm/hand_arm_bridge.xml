@@ -190,65 +190,65 @@
 
     <!-- ======= bridge2 ======= -->
     <body name="bridge2" pos="-0.03 0.39 0.86" euler="-1.5707963 0 0">
-        <joint type="free" frictionloss="0.00001" />
-        <inertial pos="0 0 0" mass="0.0005" diaginertia="0.00002 0.00002 0.00002" />
+        <joint type="free" frictionloss="0.00002" />
+        <inertial pos="0.030 0.015 0.015" mass="0.01" diaginertia="0.00001 0.00001 0.00001" />
         <geom rgba="0.15 0.65 0.63 1" type="mesh" mesh="bridge" condim="4" solimp="2 1 0.01" solref="0.01 1" friction="5 0.05 0.001"/>
     </body>
 
 
     <!-- ======= block1 ======= -->
     <body name="block1_green" pos="0.09 0.405 0.835" euler="1.5707963 0 0">
-      <joint type="free" frictionloss="0.0001" />
-      <inertial pos="0 0 0" mass="0.001" diaginertia="0.00002 0.00002 0.00002" />
+      <joint type="free" frictionloss="0.000001" />
+      <inertial pos="0 0 0" mass="0.003" diaginertia="0.00002 0.00002 0.00002" />
       <geom rgba="0.3 0.6 0.075 1" condim="4" solimp="2 1 0.01" solref="0.01 1" friction="5 0.05 0.001" pos="0 0 0" size="0.015 0.03 0.015" type="box"/>
     </body>
 
     <!-- ======= block2 ======= -->
     <body name="block2_green" pos="-0.09 0.405 0.83" euler="1.5707963 0 0">
-      <joint type="free" frictionloss="0.0001" />
-      <inertial pos="0 0 0" mass="0.001" diaginertia="0.00002 0.00002 0.00002" />
+      <joint type="free" frictionloss="0.000001" />
+      <inertial pos="0 0 0" mass="0.003" diaginertia="0.00002 0.00002 0.00002" />
       <geom rgba="0.3 0.6 0.075 1" condim="4" solimp="2 1 0.01" solref="0.01 1" friction="5 0.05 0.001" pos="0 0 0" size="0.015 0.03 0.015" type="box"/>
     </body>
 
 
     <!-- ======= block_purple1 ======= -->
     <body name="block_purple1" pos="-0.06 0.3 0.815">
-      <joint type="free" frictionloss="0.0001" />
+      <joint type="free" frictionloss="0.000001" />
       <inertial pos="0 0 0" mass="0.001" diaginertia="0.00002 0.00002 0.00002" />
       <geom rgba="0.65 0.27 0.64 1" condim="4" solimp="2 1 0.01" solref="0.01 1" friction="5 0.05 0.001" pos="0 0 0" size="0.0125 0.0125 0.0125" type="box"/>
     </body>
 
     <!-- ======= block_purple2 ======= -->
     <body name="block_purple2" pos="0 0.3 0.815">
-      <joint type="free" frictionloss="0.0001" />
+      <joint type="free" frictionloss="0.000001" />
       <inertial pos="0 0 0" mass="0.001" diaginertia="0.00002 0.00002 0.00002" />
       <geom rgba="0.65 0.27 0.64 1" condim="4" solimp="2 1 0.01" solref="0.01 1" friction="5 0.05 0.001" pos="0 0 0" size="0.0125 0.0125 0.0125" type="box"/>
     </body>
 
     <!-- ======= block_purple3 ======= -->
     <body name="block_purple3" pos="-0.12 0.3 0.815">
-      <joint type="free" frictionloss="0.0001" />
+      <joint type="free" frictionloss="0.000001" />
       <inertial pos="0 0 0" mass="0.001" diaginertia="0.00002 0.00002 0.00002" />
       <geom rgba="0.65 0.27 0.64 1" condim="4" solimp="2 1 0.01" solref="0.01 1" friction="5 0.05 0.001" pos="0 0 0" size="0.0125 0.0125 0.0125" type="box"/>
     </body>
 
     <!-- ======= block_purple4 ======= -->
     <body name="block_purple4" pos="0.06 0.3 0.815">
-      <joint type="free" frictionloss="0.0001" />
+      <joint type="free" frictionloss="0.000001" />
       <inertial pos="0 0 0" mass="0.001" diaginertia="0.00002 0.00002 0.00002" />
       <geom rgba="0.65 0.27 0.64 1" condim="4" solimp="2 1 0.01" solref="0.01 1" friction="5 0.05 0.001" pos="0 0 0" size="0.0125 0.0125 0.0125" type="box"/>
     </body>
 
     <!-- ======= block_purple5 ======= -->
     <body name="block_purple5" pos="0.12 0.3 0.815">
-      <joint type="free" frictionloss="0.0001" />
+      <joint type="free" frictionloss="0.000001" />
       <inertial pos="0 0 0" mass="0.001" diaginertia="0.00002 0.00002 0.00002" />
       <geom rgba="0.65 0.27 0.64 1" condim="4" solimp="2 1 0.01" solref="0.01 1" friction="5 0.05 0.001" pos="0 0 0" size="0.0125 0.0125 0.0125" type="box"/>
     </body>
 
     <!-- ======= block_purple6 ======= -->
     <body name="block_purple6" pos="0.16 0.3 0.815">
-      <joint type="free" frictionloss="0.0001" />
+      <joint type="free" frictionloss="0.000001" />
       <inertial pos="0 0 0" mass="0.001" diaginertia="0.00002 0.00002 0.00002" />
       <geom rgba="0.65 0.27 0.64 1" condim="4" solimp="2 1 0.01" solref="0.01 1" friction="5 0.05 0.001" pos="0 0 0" size="0.0125 0.0125 0.0125" type="box"/>
     </body>

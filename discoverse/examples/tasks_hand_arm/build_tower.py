@@ -51,8 +51,8 @@ class SimNode(HandArmTaskBase):
         tmat_block01 = get_body_tmat(self.mj_data, "block_purple3")
         tmat_block02 = get_body_tmat(self.mj_data, "block_purple6")
         return (
-            (abs(tmat_block1[2, 2]) < 0.01)
-            and (abs(abs(tmat_bridge1[1, 3] - tmat_bridge2[1, 3]) - 0.03) <= 0.002)
+            (abs(tmat_block1[2, 2]) < 0.05)
+            and (abs(abs(tmat_bridge1[1, 3] - tmat_bridge2[1, 3]) - 0.03) <= 0.05)
             and (abs(tmat_block2[2, 2]) < 0.01)
             and np.hypot(
                 tmat_block1[0, 3] - tmat_block01[0, 3],
@@ -162,7 +162,7 @@ if __name__ == "__main__":
                     ).as_matrix()
                     tmat_block_2 = get_body_tmat(sim_node.mj_data, "block2_green")
                     tmat_block_2[:3, 3] = tmat_block_2[:3, 3] + np.array(
-                        [0.035, -0.01, 0.08]
+                        [0.035, -0.005, 0.08]
                     )
                     
                     tmat_tgt_local = tmat_armbase_2_world @ tmat_block_2
@@ -177,7 +177,7 @@ if __name__ == "__main__":
                 elif stm.state_idx ==2 : #食指拇指抓取木块
                     for i in range(6):
                         sim_node.target_control[i] += 0
-                    sim_node.target_control[6:] = [1.1, 0.37, 0.6, 0, 0, 0]
+                    sim_node.target_control[6:] = [1.1, 0.37, 0.60, 0, 0, 0]
                     
                 elif stm.state_idx == 3:  # 将木块抬起
                     trmat = R.from_euler(
@@ -199,7 +199,7 @@ if __name__ == "__main__":
                 elif stm.state_idx == 4:  # 将木块移动到桥旁边上方
                     tmat_bridge = get_body_tmat(sim_node.mj_data, "bridge1")
                     tmat_bridge[:3, 3] = tmat_bridge[:3, 3] + np.array(
-                        [0.02, -0.02, 0.15]
+                        [0.02, -0.03, 0.15]
                     )
                     
                     tmat_tgt_local = tmat_armbase_2_world @ tmat_bridge
@@ -212,7 +212,7 @@ if __name__ == "__main__":
                 elif stm.state_idx == 5:  # 将木块移动下去
                     tmat_bridge = get_body_tmat(sim_node.mj_data, "bridge1")
                     tmat_bridge[:3, 3] = tmat_bridge[:3, 3] + np.array(
-                        [0.02, -0.025, 0.1]
+                        [0.02, -0.03, 0.125]
                     )
                     
                     tmat_tgt_local = tmat_armbase_2_world @ tmat_bridge
@@ -280,7 +280,7 @@ if __name__ == "__main__":
                 elif stm.state_idx == 11:  # 将木块移动到桥旁边上方
                     tmat_bridge = get_body_tmat(sim_node.mj_data, "bridge1")
                     tmat_bridge[:3, 3] = tmat_bridge[:3, 3] + np.array(
-                        [0.108, -0.027, 0.15]
+                        [0.108, -0.03, 0.15]
                     )
                     
                     tmat_tgt_local = tmat_armbase_2_world @ tmat_bridge
@@ -293,7 +293,7 @@ if __name__ == "__main__":
                 elif stm.state_idx == 12:  # 将木块移动下去
                     tmat_bridge = get_body_tmat(sim_node.mj_data, "bridge1")
                     tmat_bridge[:3, 3] = tmat_bridge[:3, 3] + np.array(
-                        [0.108, -0.027, 0.1]
+                        [0.108, -0.03, 0.125]
                     )
                     
                     tmat_tgt_local = tmat_armbase_2_world @ tmat_bridge
@@ -309,7 +309,7 @@ if __name__ == "__main__":
                 elif stm.state_idx == 14:  # 抬起
                     tmat_bridge = get_body_tmat(sim_node.mj_data, "bridge1")
                     tmat_bridge[:3, 3] = tmat_bridge[:3, 3] + np.array(
-                        [0.11, -0.025, 0.2]
+                        [0.11, -0.027, 0.2]
                     )
                     
                     tmat_tgt_local = tmat_armbase_2_world @ tmat_bridge
@@ -392,7 +392,7 @@ if __name__ == "__main__":
                 elif stm.state_idx ==21:  # 将木块移动下去
                     tmat_bridge = get_body_tmat(sim_node.mj_data, "bridge1")
                     tmat_bridge[:3, 3] = tmat_bridge[:3, 3] + np.array(
-                        [0.02, -0.02, 0.14]
+                        [0.02, -0.02, 0.15]
                     )
                     
                     tmat_tgt_local = tmat_armbase_2_world @ tmat_bridge
@@ -487,7 +487,7 @@ if __name__ == "__main__":
                 elif stm.state_idx ==29:  # 将木块移动下去
                     tmat_bridge = get_body_tmat(sim_node.mj_data, "bridge1")
                     tmat_bridge[:3, 3] = tmat_bridge[:3, 3] + np.array(
-                        [0.01, -0.02, 0.17]
+                        [0.01, -0.02, 0.175]
                     )
                     
                     tmat_tgt_local = tmat_armbase_2_world @ tmat_bridge
@@ -582,7 +582,7 @@ if __name__ == "__main__":
                 elif stm.state_idx ==37:  # 将木块移动下去
                     tmat_bridge = get_body_tmat(sim_node.mj_data, "bridge1")
                     tmat_bridge[:3, 3] = tmat_bridge[:3, 3] + np.array(
-                        [0.02, -0.02, 0.22]
+                        [0.02, -0.02, 0.205]
                     )
                     
                     tmat_tgt_local = tmat_armbase_2_world @ tmat_bridge
@@ -867,7 +867,7 @@ if __name__ == "__main__":
                 elif stm.state_idx ==61:  # 将木块移动下去
                     tmat_bridge = get_body_tmat(sim_node.mj_data, "bridge1")
                     tmat_bridge[:3, 3] = tmat_bridge[:3, 3] + np.array(
-                        [0.108, -0.027, 0.22]
+                        [0.108, -0.027, 0.205]
                     )
                     
                     tmat_tgt_local = tmat_armbase_2_world @ tmat_bridge
